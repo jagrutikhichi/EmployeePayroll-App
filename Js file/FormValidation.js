@@ -55,3 +55,58 @@ function checkDate() {
         dateerror.textContent = e;
     }
 }
+
+//UC-3 To create EmployeePayroll Object on Save
+const save = () => {
+    try {
+        let employeePayrollData = createEmployeePayroll();
+        createAndUpdateStorage(employeePayrollData);
+
+    } catch (e) {
+        console.log(e);
+        return;
+    }
+}
+
+const createEmployeePayroll = () => {
+    let employeePayrollData = new EmployeePayrollData();
+
+    try {
+        employeePayrollData.name = getInputValueId('#name');
+        let date = getInputValueId('#day') + " " + getInputValueId('#month') + " " + getInputValueId('#year');
+        employeePayrollData.startDate = Date.parse(date);
+    } catch (e) {
+        console.log(e)
+        setTextValue('.text-error', e);
+        throw e;
+    }
+    employeePayrollData.profilePic = getSelectedValue('[name = profile]').pop();
+    employeePayrollData.gender = getSelectedValue('[name = gender]').pop();
+    employeePayrollData.department = getSelectedValue('[name = department]');
+    employeePayrollData.salary = getSelectedValue('#salary');
+    employeePayrollData.note = getSelectedValue('#notes');
+    console.log(employeePayrollData);
+
+    return employeePayrollData;
+}
+
+const getInputValueId = (id) => {
+    let value = document.querySelector(id).value;
+    return value;
+}
+
+const getSelectedValue = (propertyValue) => {
+    let allItem = document.querySelectorAll(propertyValue);
+    let setItem = [];
+    allItem.forEach(item => {
+        if (item.checked) {
+            setItem.push(item.value);
+        }
+    });
+    return setItem;
+}
+
+const setTextValue = (id, message) => {
+    const textError = document.querySelector(id);
+    textError.textContent = message;
+}
