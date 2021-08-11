@@ -110,3 +110,17 @@ const setTextValue = (id, message) => {
     const textError = document.querySelector(id);
     textError.textContent = message;
 }
+
+//UC-4 To save Employee Payroll Object to Local Storage
+const createAndUpdateStorage = (data) => {
+    let dataList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
+
+    if (dataList != undefined) {
+        dataList.push(data);
+    } else {
+        dataList = [data];
+    }
+
+    localStorage.setItem("EmployeePayrollList", JSON.stringify(dataList));
+    alert("data stored with name : " + data.name);
+}
