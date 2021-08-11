@@ -124,3 +124,27 @@ const createAndUpdateStorage = (data) => {
     localStorage.setItem("EmployeePayrollList", JSON.stringify(dataList));
     alert("data stored with name : " + data.name);
 }
+
+//UC-5 To reset the form on Clicking reset
+const resetForm = () => {
+    setValue('#name', '');
+    unsetSelectedValues('[name=profile]');
+    unsetSelectedValues('[name=gender]');
+    unsetSelectedValues('[name=department]');
+    setValue('#salary', ' ');
+    setTextValue(".salary-output", '400000');
+    setValue('#notes', ' ');
+    setValue('#day', '1');
+    setValue('#month', 'Jan');
+    setValue('#year', '2020');
+}
+
+const unsetSelectedValues = (propertyValue) => {
+    let allItems = document.querySelectorAll(propertyValue);
+    allItems.forEach(item => { item.checked = false; });
+}
+
+const setValue = (id, value) => {
+    const element = document.querySelector(id);
+    element.value = value;
+}

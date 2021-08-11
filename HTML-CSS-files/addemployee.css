@@ -1,8 +1,7 @@
-/* UC1 */
-
 body {
     margin: 0;
     height: 100%;
+    font-family: Roboto;
 }
 
 .header {
@@ -24,6 +23,7 @@ body {
     align-items: center;
     border: 0px solid green;
     width: 80%;
+    cursor: pointer;
 }
 
 .logo-content img {
@@ -46,9 +46,6 @@ body {
     box-sizing: border-box;
 }
 
-
-/* UC2 */
-
 .form-content {
     min-height: calc(100%-80px);
     background-color: #f7f7f7;
@@ -56,6 +53,8 @@ body {
     justify-content: center;
     align-items: center;
     border: 0px solid green;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .form {
@@ -85,14 +84,13 @@ body {
 }
 
 .label {
-    min-width: 140px;
+    min-width: 180px;
 }
 
 .text {
     font-size: 16px;
     color: #42515f;
     opacity: 1;
-    font-family: Roboto;
 }
 
 .input {
@@ -103,18 +101,16 @@ body {
     resize: vertical;
 }
 
-
-/* UC3 */
-
-.button {
+.profile-radio-content {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .profile {
     width: 40px;
     border-radius: 50%;
-    margin-left: 12px;
+    margin-left: 8px;
 }
 
 .profile-radio-content>label {
@@ -123,15 +119,13 @@ body {
     align-items: center;
 }
 
-
-/* UC5 */
-
 select {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
     font: normal normal normal 16px Roboto;
+    letter-spacing: 0px;
     color: #42515f;
     background-color: transparent;
 }
@@ -149,36 +143,32 @@ select {
     letter-spacing: 0px;
     color: #42515f;
     opacity: 1;
+    background: transparent;
     font-weight: 400;
     min-width: 140px;
     padding: 7px 7px;
     border: 1px solid #707070;
     cursor: pointer;
-    border-radius: 6px;
-    background-color: #f5f5f5;
+    border-radius: 5px;
+    background: #f5f5f5;
 }
 
-.CancelButton {
+.cancelButton {
     text-decoration: none;
     text-align: center;
 }
 
 .submitButton {
-    border: 1px solid #707070;
-    background-color: #f5f5f5;
     margin-right: 30px;
 }
-
-
-/* UC6 */
 
 @media only screen and (max-width:600px) {
     .form {
         margin-top: 10px;
     }
-    .submit-resert {
-        display: flex;
+    .submit-reset {
         width: 100%;
+        display: flex;
         flex-grow: 1;
         flex-direction: row-reverse;
         justify-content: space-between;
@@ -198,9 +188,41 @@ select {
         margin-left: 0px;
     }
     .form {
-        width: 140px;
-        padding: 140% 85;
+        width: 85%;
+        padding: 44px 20px;
     }
+    .profile-label {
+        margin-right: 0px;
+    }
+}
+
+a.button:hover {
+    background: grey;
+    color: white;
+}
+
+.submitButton:hover {
+    background-color: #82a70c;
+    color: white;
+}
+
+.resetButton:hover {
+    background: grey;
+    color: white;
+}
+
+.department {
+    margin-left: 30px;
+}
+
+@media only screen and (max-width:320px) {
+    .label {
+        min-width: 50px;
+    }
+}
+
+.profile-label {
+    margin-right: 20px;
 }
 
 error-output {
