@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="addemployee.css">
+    <script type="text/javascript" src="C:\Users\Jagruti Khichi\PycharmProjects\EmployeePayrollApp\Js file\EmployeePayroll.js"></script>
+    <script type="text/javascript" src="C:\Users\Jagruti Khichi\PycharmProjects\EmployeePayrollApp\Js file\FormValidation.js"></script>
     <title>Employee Payroll Form</title>
 </head>
 
@@ -172,28 +174,6 @@
                     <button type="reset" class="button resetButton">Reset</button>
                 </div>
             </div>
-            <!--UC8-->
-            <script>
-                const salary = document.querySelector('#salary');
-                const salaryOutput = document.querySelector('.salary-output-text');
-                salaryOutput.textContent = salary.value;
-                salary.addEventListener('input', function() {
-                    salaryOutput.textContent = salary.value;
-                    console.log(salaryOutput.textContent);
-                });
-            </script>
-            <script>
-                const name = document.querySelector('#name');
-                const texterror = document.querySelector('.text-error');
-                name.addEventListener('input', function() {
-                    let pattern = RegExp('^[A-Z]{1}[a-z]{2,}$');
-                    if (pattern.test(name.value))
-                        texterror.textContent = ' ';
-                    else
-                        texterror.textContent = 'Name is Incorrect!';
-                });
-                console.log(name);
-            </script>
         </form>
     </div>
 </body>

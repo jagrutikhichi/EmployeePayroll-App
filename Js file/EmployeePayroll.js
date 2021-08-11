@@ -1,77 +1,73 @@
+//UC-1 To Modify Employee Payroll Class with new Attributes and Getters & Setters
 class EmployeePayrollData {
-    id;
+
 
     get id() {
-        return this.id;
+        return this._id;
     }
-    set id(d) {
-        this.id = id;
+    set id(id) {
+        this._id = id;
     }
 
     get name() {
-        return this.name
+        return this._name;
     }
+
     set name(name) {
-        console.log(name);
         let pattern = RegExp('^[A-Z]{1}[a-zA-Z]{2,}$');
         if (pattern.test(name))
-            this.name = name;
+            this._name = name;
         else
-            throw 'Incorrect Name';
+            throw 'Invalid Name';
     }
 
     get profilePic() {
-        return this.profilePic;
+        return this._profilePic;
     }
 
     set profilePic(profilePic) {
-        this.profilePic = profilePic;
+        this._profilePic = profilePic;
     }
 
     get gender() {
-        return this.gender;
+        return this._gender;
     }
     set gender(gender) {
-        this.gender = gender;
+        this._gender = gender;
     }
 
     get department() {
-        return this.department;
+        return this._department;
     }
     set department(department) {
-        this.department = department;
+        this._department = department;
     }
 
     get salary() {
-        return this.salary;
+        return this._salary;
     }
     set salary(salary) {
-        this.salary = salary;
+        this._salary = salary;
     }
 
     get note() {
-        return this.note;
+        return this._note;
     }
     set note(note) {
-        this.note = note;
+        this._note = note;
     }
 
     get startDate() {
-        return this.startDate;
+        return this._startDate
     }
-
-    //To validate Date
     set startDate(startDate) {
         let currentDate = new Date();
-        if (startDate > currentDate)
-            throw "Start Date is a future date";
-
-        var diff = Math.abs(currentDate.getTime() - startDate.getTime());
-        if (diff / (1000 * 60 * 60 * 24) > 30) {
-            throw "Start Date is a beyond 30 days";
-        }
-        this._startDate = startDate;
+        if (startDate <= currentDate)
+            this._startDate = startDate;
+        else
+            throw "Invalid Date"
     }
+
 
     toString() {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
