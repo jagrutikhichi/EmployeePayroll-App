@@ -1,7 +1,6 @@
 //UC-1 To Modify Employee Payroll Class with new Attributes and Getters & Setters
 class EmployeePayrollData {
 
-
     get id() {
         return this._id;
     }

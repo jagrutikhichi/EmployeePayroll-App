@@ -54,6 +54,7 @@ function checkDate() {
     } catch (e) {
         dateerror.textContent = e;
     }
+
 }
 
 //UC-3 To create EmployeePayroll Object on Save
@@ -83,8 +84,8 @@ const createEmployeePayroll = () => {
     employeePayrollData.profilePic = getSelectedValue('[name = profile]').pop();
     employeePayrollData.gender = getSelectedValue('[name = gender]').pop();
     employeePayrollData.department = getSelectedValue('[name = department]');
-    employeePayrollData.salary = getSelectedValue('#salary');
-    employeePayrollData.note = getSelectedValue('#notes');
+    employeePayrollData.salary = getInputValueId('#salary');
+    employeePayrollData.note = getInputValueId('#notes');
     console.log(employeePayrollData);
 
     return employeePayrollData;
@@ -123,6 +124,7 @@ const createAndUpdateStorage = (data) => {
 
     localStorage.setItem("EmployeePayrollList", JSON.stringify(dataList));
     alert("data stored with name : " + data.name);
+
 }
 
 //UC-5 To reset the form on Clicking reset
@@ -133,17 +135,16 @@ const resetForm = () => {
     unsetSelectedValues('[name=department]');
     setValue('#salary', ' ');
     setTextValue(".salary-output", '400000');
+    setTextValue('#text-error', ' ');
     setValue('#notes', ' ');
     setValue('#day', '1');
     setValue('#month', 'Jan');
     setValue('#year', '2020');
 }
-
 const unsetSelectedValues = (propertyValue) => {
     let allItems = document.querySelectorAll(propertyValue);
     allItems.forEach(item => { item.checked = false; });
 }
-
 const setValue = (id, value) => {
     const element = document.querySelector(id);
     element.value = value;
