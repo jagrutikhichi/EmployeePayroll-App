@@ -1,10 +1,22 @@
+let isUpdate = false;
+let employPayrollObject = {};
+
 window.addEventListener('DOMContentLoaded', (event) => {
     validateName();
+    salaryOutput();
     validateDate();
-    SalaryOutput();
+    checkForUpdate();
 });
 
-//UC-2 To add eventListener to salary and to validate name and date
+function salaryOutput() {
+    const salary = document.querySelector('#salary');
+    const output = document.querySelector('.salary-output');
+    output.textContent = salary.value;
+    salary.addEventListener('input', function() {
+        output.textContent = salary.value;
+    });
+}
+
 function validateName() {
     const name = document.querySelector('#name');
     const textError = document.querySelector('.text-error');
@@ -17,18 +29,9 @@ function validateName() {
             (new EmployeePayrollData()).name = name.value;
             textError.textContent = "";
         } catch (e) {
-            console.log(e);
+            console.error(e);
             textError.textContent = e;
         }
-    });
-}
-
-function SalaryOutput() {
-    const salary = document.querySelector('#salary');
-    const salaryOutput = document.querySelector('.salary-output');
-    salary.addEventListener('input', function() {
-        salaryOutput.textContent = salary.value;
-        console.log(salaryOutput.textContent);
     });
 }
 
@@ -36,58 +39,58 @@ function validateDate() {
     const day = document.querySelector('#day');
     const month = document.querySelector('#month');
     const year = document.querySelector('#year');
-    const dateerror = document.querySelector('.date-error');
 
     day.addEventListener('input', checkDate);
     month.addEventListener('input', checkDate);
     year.addEventListener('input', checkDate);
-
 }
 
 function checkDate() {
-    console.log("checking date");
-    const dateerror = document.querySelector('.date-error');
+    const dateError = document.querySelector('.date-error');
     try {
         let date = day.value + " " + month.value + " " + year.value;
-        (new EmployeePayrollData()).startDate = Date.parse(date);
-        dateerror.textContent = " ";
+        (new EmployeePayrollData()).startDate = new Date(Date.parse(date));
+        dateError.textContent = "";
     } catch (e) {
-        dateerror.textContent = e;
+        dateError.textContent = e;
     }
-
 }
 
-//UC-3 To create EmployeePayroll Object on Save
-const save = () => {
+const save = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     try {
-        let employeePayrollData = createEmployeePayroll();
-        createAndUpdateStorage(employeePayrollData);
-
+        let empData = setEmployeePayrollObject();
+        createAndUpdateStorage(empData);
+        resetForm();
+        window.location.replace(site_properties.home_page)
     } catch (e) {
-        console.log(e);
+        console.log(e)
         return;
     }
 }
 
-const createEmployeePayroll = () => {
+const setEmployeePayrollObject = () => {
     let employeePayrollData = new EmployeePayrollData();
-
     try {
+        alert(getInputValueId('#name'))
         employeePayrollData.name = getInputValueId('#name');
         let date = getInputValueId('#day') + " " + getInputValueId('#month') + " " + getInputValueId('#year');
-        employeePayrollData.startDate = Date.parse(date);
+        employeePayrollData.startDate = new Date(Date.parse(date));
     } catch (e) {
-        console.log(e)
-        setTextValue('.text-error', e);
-        throw e;
+        if ('Incorrect Name' == e) {
+            setTextValue('.text-error', e);
+        } else {
+            setTextValue('.date-error', e);
+        }
+        throw e
     }
-    employeePayrollData.profilePic = getSelectedValue('[name = profile]').pop();
-    employeePayrollData.gender = getSelectedValue('[name = gender]').pop();
-    employeePayrollData.department = getSelectedValue('[name = department]');
+    employeePayrollData.profilePic = getSelectedValue('[name=profile]').pop();
+    employeePayrollData.gender = getSelectedValue('[name=gender]').pop();
+    employeePayrollData.department = getSelectedValue('[name=department]');
     employeePayrollData.salary = getInputValueId('#salary');
-    employeePayrollData.note = getInputValueId('#notes');
-    console.log(employeePayrollData);
-
+    employeePayrollData.note = getInputValueId('#notes').replace(/\s/g, '');
+    employeePayrollData.id = employPayrollObject._id;
     return employeePayrollData;
 }
 
@@ -107,45 +110,93 @@ const getSelectedValue = (propertyValue) => {
     return setItem;
 }
 
-const setTextValue = (id, message) => {
-    const textError = document.querySelector(id);
-    textError.textContent = message;
+const setTextValue = (id, value) => {
+    let textError = document.querySelector(id);
+    textError.textContent = value;
 }
 
-//UC-4 To save Employee Payroll Object to Local Storage
+const createNewEmpId = () => {
+    let empId = localStorage.getItem('EmpId');
+    empId = !empId ? 1 : (parseInt(empId) + 1).toString();
+    localStorage.setItem('EmpId', empId);
+    return empId;
+}
+
 const createAndUpdateStorage = (data) => {
     let dataList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
-
-    if (dataList != undefined) {
-        dataList.push(data);
+    if (dataList) {
+        let existingEmpData = dataList.find(empData => empData._id == data.id);
+        if (!existingEmpData) {
+            data._id = createNewEmpId();
+            dataList.push(data);
+        } else {
+            const index = dataList.map(empData => empData._id).indexOf(data.id);
+            dataList.splice(index, 1, data);
+            console.log(dataList)
+        }
     } else {
-        dataList = [data];
+        data._id = createNewEmpId();
+        dataList = [data]
     }
-
     localStorage.setItem("EmployeePayrollList", JSON.stringify(dataList));
-    alert("data stored with name : " + data.name);
-
 }
 
-//UC-5 To reset the form on Clicking reset
 const resetForm = () => {
     setValue('#name', '');
     unsetSelectedValues('[name=profile]');
     unsetSelectedValues('[name=gender]');
     unsetSelectedValues('[name=department]');
-    setValue('#salary', ' ');
-    setTextValue(".salary-output", '400000');
-    setTextValue('#text-error', ' ');
-    setValue('#notes', ' ');
+    setValue('#salary', '');
+    setTextValue('.salary-output', 400000);
+    setValue('#notes', '');
     setValue('#day', '1');
     setValue('#month', 'Jan');
     setValue('#year', '2020');
 }
 const unsetSelectedValues = (propertyValue) => {
     let allItems = document.querySelectorAll(propertyValue);
-    allItems.forEach(item => { item.checked = false; });
+    allItems.forEach(item => {
+        item.checked = false;
+    });
 }
+
 const setValue = (id, value) => {
     const element = document.querySelector(id);
     element.value = value;
+}
+
+//Day-48 UC-2 To check for Update and set values of the Form Elements
+const checkForUpdate = () => {
+    const jsonData = localStorage.getItem('edit-emp');
+    isUpdate = jsonData ? true : false;
+    if (!isUpdate) return;
+    employPayrollObject = JSON.parse(jsonData);
+    setForm();
+}
+
+const setForm = () => {
+    setValue('#name', employPayrollObject._name);
+    setSelectedValue('[name = profile]', employPayrollObject._profilePic);
+    setSelectedValue('[name = gender]', employPayrollObject._gender);
+    setSelectedValue('[name = department]', employPayrollObject._department);
+    setValue('#salary', employPayrollObject._salary);
+    setTextValue('.salary-output', employPayrollObject._salary);
+    let date = strigifyDate(employPayrollObject._startDate).split(" ");
+    setValue('#day', date[0]);
+    setValue('#month', date[1]);
+    setValue('#year', date[2]);
+    setValue('#notes', employPayrollObject._note);
+}
+
+const setSelectedValue = (propertyValue, value) => {
+    let allItem = document.querySelectorAll(propertyValue);
+    allItem.forEach(item => {
+        if (Array.isArray(value)) {
+            if (value.includes(item.value)) {
+                item.checked = true;
+            }
+        } else if (item.value === value) {
+            item.checked = true;
+        }
+    });
 }
