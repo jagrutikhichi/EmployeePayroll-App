@@ -1,12 +1,6 @@
-//UC-1 To Modify Employee Payroll Class with new Attributes and Getters & Setters
 class EmployeePayrollData {
 
-    get id() {
-        return this._id;
-    }
-    set id(id) {
-        this._id = id;
-    }
+    id;
 
     get name() {
         return this._name;
@@ -17,7 +11,7 @@ class EmployeePayrollData {
         if (pattern.test(name))
             this._name = name;
         else
-            throw 'Invalid Name';
+            throw 'Incorrect Name';
     }
 
     get profilePic() {
@@ -57,7 +51,7 @@ class EmployeePayrollData {
     }
 
     get startDate() {
-        return this._startDate
+        return this._startDate;
     }
     set startDate(startDate) {
         let currentDate = new Date();
@@ -71,10 +65,9 @@ class EmployeePayrollData {
         this._startDate = startDate;
     }
 
-
     toString() {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const empDate = !startDate ? "undefined" : this.startDate.toLocaleDateString("en-us", options);
+        const empDate = !startDate ? "" : this.startDate.toLocaleDateString("en-us", options);
         return "id=" + this.id + ",name='" + this.name + ", gender='" +
             this.gender + ", profilePic='" + this.profilePic +
             ", deparment=" + this.deparment + ", salary=" +
@@ -82,3 +75,23 @@ class EmployeePayrollData {
     }
 
 }
+
+// try {
+//     let contact = new EmployeePayrollData();
+//     contact.name = 'mike';
+//     console.log(contact.name);
+// } catch (e) {
+//     console.error(e);
+// }
+
+// window.addEventListener('DOMContentLoaded',(event)=>{
+// const name = document.querySelector('#name');
+// const texterror = document.querySelector('.text-error');
+// name.addEventListener('input', function () {
+//     let pattern = RegExp('^[A-Z]{1}[a-z]{2,}$');
+//     if (pattern.test(name.value))
+//         texterror.textContent = ' ';
+//     else
+//         texterror.textContent = 'Name is Incorrect!';
+// });
+// });

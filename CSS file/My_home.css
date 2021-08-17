@@ -1,7 +1,6 @@
-html {
+html body {
     margin: 0;
     height: 100%;
-    font-family: Roboto;
 }
 
 .header {
@@ -75,22 +74,29 @@ html {
     flex-direction: column;
     min-height: calc(100vh - 80px);
     background-color: #f7f7f7;
-    padding: 30px 0px 10px;
+    padding: 30px 0 10px;
     box-sizing: border-box;
 }
 
 .add-button {
-    font: normal normal normal 22px/29px Roboto;
-    letter-spacing: 0px;
+    font-size: 21px;
+    font-family: Roboto;
     color: #ffffff;
-    opacity: 1;
-    background: #82a70c 0% 0% no-repeat padding-box;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 18px;
-    outline: none;
+    font-weight: 400;
+    min-width: 145px;
+    padding: 7px 7px;
+    padding-top: 12px;
     cursor: pointer;
+    background: #82a70c 0% 0% no-repeat padding-box;
+    border: 2px solid #969696;
+    border-radius: 9px;
     text-decoration: none;
+    display: flex;
+}
+
+.plus-icon {
+    padding-right: 5px;
+    padding-left: 2px;
 }
 
 .table-main {
@@ -121,7 +127,7 @@ th {
     color: #ffffff;
     text-transform: uppercase;
     opacity: 1;
-    border-radius: 0px 0px solid #dddddd;
+    border: 0px solid #dddddd;
 }
 
 tr:not(:first-child) {
